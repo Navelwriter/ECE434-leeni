@@ -1,5 +1,6 @@
 ## GPIO Measurements
 
+### blinkLED.sh
 sleep time | min voltage (mv) | max voltage (mv)| period(ms) | frequency(Hz) | htop process(%) | stable? | stable w/ vi?|
 | ----------- | ----------- |---|---|---|---|---|---|
 | 0.5  | -8.21   |336 | 1025| 0.976 | 0.7 | yes| yes|
@@ -11,3 +12,19 @@ sleep time | min voltage (mv) | max voltage (mv)| period(ms) | frequency(Hz) | h
 | 0.05  | -8 (fluctuates)   |345 | 43| 23.8 | 11.4 | periods fluctuate| no at start|
 | 0.01  | -8 (fluctuates)   |345 | 46| 40 | 20 | no| no|
 | none | -300 | 400|no|no |no |no |no |no |
+
+### blinkLED.py
+sleep time | period(ms) | frequency(Hz) | htop process(%) | stable? |
+| 0.1  | 201| 4.98 | 0.7 | yes|
+| 0.05  | 101| 9.9 | 3.3 | yes|
+| 0.02  | 41.5| 24.1 | 2.0 | yes|
+| 0.01  | 21| 48 | 4 | yes|
+| 0.002  | 200| 192 |16 | yes|
+| 0.001  | 3| 330 | 30 | yes|
+| 0.0005  | 1.9| 500 | 52 | no|
+| 0.00025  | 0.760| 1280 | 25 | no|
+
+### blinkLED.c
+blinkLED only blinks the onboard LED at this moment so I am unable to measure without remaking the code
+
+
