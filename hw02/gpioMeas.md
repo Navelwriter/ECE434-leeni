@@ -31,7 +31,7 @@ blinkLED only blinks the onboard LED at this moment so I am unable to measure wi
 ### gpiod testing
 filename | Shortest Period  | frequency | htop process(%) | 
 |---|---|---|---|---|
-|toggle1.py|210.1 us|4.76 KHz|
-|toggle1.c| 180.0 us| 5.5 KHz|
-|toggle2.py| 226.3 us| 4.424 KHz|
-|toggle2.c| 166.6 us| 6.0 KHz|
+|toggle1.py|210.1 us|4.76 KHz| 66.4 |
+|toggle1.c| 180.0 us| 5.5 KHz| 62.0 |
+|toggle2.py| 226.3 us| 4.424 KHz| 84.1 |
+|toggle2.c| 166.6 us| 6.0 KHz| 55.2 |
