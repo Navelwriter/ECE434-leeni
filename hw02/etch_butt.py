@@ -119,7 +119,7 @@ def main(stdscr):
         board.draw(stdscr)
         # butt = lines.event_wait(sec=1) #wait for button press
         buttInput = lines.get_values() #get the value of the button
-        stdscr.addstr("\n" + buttInput)
+        stdscr.addstr("\n" + buttInput[1])
         c = stdscr.getkey()
         if c == 'q':
             break
