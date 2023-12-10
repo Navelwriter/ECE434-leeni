@@ -15,6 +15,7 @@ sleep time | min voltage (mv) | max voltage (mv)| period(ms) | frequency(Hz) | h
 
 ### blinkLED.py
 sleep time | period(ms) | frequency(Hz) | htop process(%) | stable? |
+|---|---|---|---|---|
 | 0.1  | 201| 4.98 | 0.7 | yes|
 | 0.05  | 101| 9.9 | 3.3 | yes|
 | 0.02  | 41.5| 24.1 | 2.0 | yes|
