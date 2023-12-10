@@ -1,6 +1,6 @@
 ## GPIO Measurements
 
-### blinkLED.sh
+### blinkLED.sh (Questions are answered in table)
 sleep time | min voltage (mv) | max voltage (mv)| period(ms) | frequency(Hz) | htop process(%) | stable? | stable w/ vi?|
 | ----------- | ----------- |---|---|---|---|---|---|
 | 0.5  | -8.21   |336 | 1025| 0.976 | 0.7 | yes| yes|
@@ -28,4 +28,10 @@ sleep time | period(ms) | frequency(Hz) | htop process(%) | stable? |
 ### blinkLED.c
 blinkLED only blinks the onboard LED at this moment so I am unable to measure without remaking the code
 
-
+### gpiod testing
+filename | Shortest Period  | frequency | htop process(%) | 
+|---|---|---|---|---|
+|toggle1.py|210.1 us|4.76 KHz|
+|toggle1.c| 180.0 us| 5.5 KHz|
+|toggle2.py| 226.3 us| 4.424 KHz|
+|toggle2.c| 166.6 us| 6.0 KHz|
