@@ -2,9 +2,8 @@
 # //////////////////////////////////////
 # 	getsetEvent.py
 #   Like getset.py but uses events.
-#   Get the value of P8_16 and write it to P9_14. 
-#     P8_16 is line 14 on chip 1.  P9_14 is line 18 of chip 1.
-# 	Wiring:	Attach a switch to P8_16 and 3.3V and an LED to P9_14.
+#   Get the value of P8_11 P8_12 P8_15 P8_16 and write it to P9_12 P9_14 P9_15 P9_16. 
+# 	Wiring:	Attach a switch to P8_11 P8_12 P8_15 P8_16 and 3.3V and an LED to P9_12 P9_14 P9_15 P9_16.
 # 	Setup:	sudo apt uupdate; sudo apt install libgpiod-dev
 #           Run: gpioinfo | grep -i -e chip -e P9_14 to find chip and line numbers
 # 	See:	https://github.com/starnight/libgpiod-example/blob/master/libgpiod-led/main.c
