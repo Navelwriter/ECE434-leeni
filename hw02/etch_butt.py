@@ -1,7 +1,7 @@
 #//////////////////////////////////////
 # Noah Lee 
 # ECE 434 hw01: Etch-a-sketch
-# 12/04/2023
+# 12/10/2023
 #//////////////////////////////////////
 
 #!/usr/bin/env python3
@@ -10,14 +10,15 @@
 # import argparse
 import curses
 import gpiod
+import time
 
 CONSUMER='getset'
 CHIP='1'
 getoffsets=[13, 12, 15, 14] # P8_11 P8_12 P8_15 P8_16
+button_mapping=['UP','DOWN','LEFT','RIGHT']
+combo_mapping=['CLEAR','CLEAR','QUIT']
 
-chip = gpiod.Chip(CHIP)
-lines = chip.get_lines(getoffsets)
-lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_EV_BOTH_EDGES)
+
 
 
 class Board:
@@ -28,9 +29,18 @@ class Board:
         self.board = [["." for i in range(self.x)] for j in range(self.x)]
         self.cursor = [0,0]
         self.shape = "X"
+        self.button_setup()
+
+    def button_setup(self):
+        chip = gpiod.Chip(CHIP)
+        self.lines = chip.get_lines(getoffsets)
+        self.lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_EV_RISING_EDGE)
+        self.last_val = self.lines.get_values()
+
     def clear(self, stdscr):
         self.board = [["." for i in range(self.x)] for j in range(self.y)]
         stdscr.clear()
+
     def move(self, dir):
         if dir == 'UP':
             self.cursor[1] -= 1
@@ -60,6 +70,7 @@ class Board:
         boardstr = "\n".join(["".join(row) for row in self.board])
 
         stdscr.addstr(boardstr)
+        printInstructions(stdscr)
         stdscr.refresh()
     def change_cursor(self,stdscr):
         #prompt user for a new cursor shape on the bottom of the screen like vim 
@@ -105,9 +116,8 @@ def startup(stdscr):
         stdscr.getkey() 
         startup(stdscr)
     #create board
-    stdscr.addstr("\nYou have selected a board size of size (" + str(board.x) + " by " + str(board.y) + ")\n")
-    stdscr.addstr("Press arrow keys to move the cursor, press 'c' to clear the screen, press 'f' to change cursor shape, and press 'q' to quit\n")
-    stdscr.addstr("Press any key to continue")
+    printInstructions(stdscr)
+    stdscr.addstr("Press any key on keyboard to continue")
     curses.noecho()
     stdscr.getkey()
     return board
@@ -115,27 +125,35 @@ def startup(stdscr):
 def main(stdscr):
     board = startup(stdscr)
     board.clear(stdscr)
+    board.draw(stdscr)
     while(True):
-        board.draw(stdscr)
-        # butt = lines.event_wait(sec=1) #wait for button press
-        buttInput = lines.get_values() #get the value of the button
-        stdscr.addstr("\n" + buttInput[1])
-        c = stdscr.getkey()
-        if c == 'q':
+        butt_in = board.lines.event_wait(sec=1) #wait for button press
+        quit = 0
+        if butt_in:
+            butt = board.lines.get_values()
+            for k in range(len(butt)):
+                if(k < len(butt)-1):
+                    if(butt[k]==1 & butt[k+1]==1): #checks if 2 buttons are pressed at same time
+                        if combo_mapping[k] == "CLEAR":
+                            board.clear(stdscr)
+                            board.draw(stdscr)
+                        if combo_mapping[k] == "QUIT":
+                            quit = 1
+                            break
+
+                if butt[k] != board.last_val[k]: #check if button is debounced
+                    if butt[k]:                  #if button is pressed move
+                        board.move(button_mapping[k])
+                        board.draw(stdscr)
+                    board.last_val[k] = butt[k]
+        if quit:
             break
-        elif c == 'f':
-            board.change_cursor(stdscr)
-        elif c == 'c':
-            board.clear(stdscr)
-        elif c == 'KEY_UP':
-            board.move('UP')
-        elif c == 'KEY_DOWN':
-            board.move('DOWN')
-        elif c == 'KEY_LEFT':
-            board.move('LEFT')
-        elif c == 'KEY_RIGHT':
-            board.move('RIGHT')
     
+def printInstructions(stdscr):
+    stdscr.addstr("\nButton 0: UP, Button 1: DOWN, Button 2: LEFT, Button 3: RIGHT\n")
+    stdscr.addstr("Press Button 0 and Button 1 Simultaneously to CLEAR BOARD\n")
+    stdscr.addstr("You Can Also Press Button 1 and Button 2 Simultaneously to CLEAR BOARD\n")
+    stdscr.addstr("Press Button 3 and Button 4 Simultaneously to QUIT\n")
 
 
 
