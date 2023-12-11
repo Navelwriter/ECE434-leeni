@@ -16,7 +16,7 @@ CONSUMER='getset'
 CHIP='1'
 getoffsets=[13, 12, 15, 14] # P8_11 P8_12 P8_15 P8_16
 button_mapping=['UP','DOWN','LEFT','RIGHT']
-combo_mapping=['CLEAR','CLEAR','QUIT']
+combo_mapping=['CLEAR','TOGGLE','QUIT']
 
 
 
@@ -72,6 +72,13 @@ class Board:
         stdscr.addstr(boardstr)
         printInstructions(stdscr)
         stdscr.refresh()
+
+    def toggle_cursor(self):
+        if self.shape == "X":
+            self.shape = "."
+        else:
+            self.shape = "X"
+
     def change_cursor(self,stdscr):
         #prompt user for a new cursor shape on the bottom of the screen like vim 
         curses.echo() #to allow user to see their input
@@ -137,7 +144,9 @@ def main(stdscr):
                         if combo_mapping[k] == "CLEAR":
                             board.clear(stdscr)
                             board.draw(stdscr)
-                        if combo_mapping[k] == "QUIT":
+                        elif combo_mapping[k] == "TOGGLE":
+                            board.toggle_cursor()
+                        elif combo_mapping[k] == "QUIT":
                             quit = 1
                             break
 
@@ -152,7 +161,7 @@ def main(stdscr):
 def printInstructions(stdscr):
     stdscr.addstr("\nButton 0: UP, Button 1: DOWN, Button 2: LEFT, Button 3: RIGHT\n")
     stdscr.addstr("Press Button 0 and Button 1 Simultaneously to CLEAR BOARD\n")
-    stdscr.addstr("You Can Also Press Button 1 and Button 2 Simultaneously to CLEAR BOARD\n")
+    stdscr.addstr("Press Button 1 and Button 2 Simultaneously to TOGGLE CURSOR TO DRAW OR ERASE\n")
     stdscr.addstr("Press Button 3 and Button 4 Simultaneously to QUIT\n")
 
 
