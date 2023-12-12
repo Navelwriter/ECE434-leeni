@@ -12,13 +12,15 @@ sleep time | min voltage (mv) | max voltage (mv)| period(ms) | frequency(Hz) | h
 | 0.05  | -8 (fluctuates)   |345 | 43| 23.8 | 11.4 | periods fluctuate| no at start|
 | 0.01  | -8 (fluctuates)   |345 | 46| 40 | 20 | no| no|
 | none | -300 | 400|no|no |no |no |no |no |
-What's the min and max voltage? (for sleep(0.5))
+
+
+#### What's the min and max voltage? (for sleep(0.5))
 3.36V, -8mV
-What period and frequency is it? (for sleep(0.5))
+#### What period and frequency is it? (for sleep(0.5))
 1025ms , 0.976
-Fastest Period? 
+#### Fastest Period? 
 46ms 
-Try cleaning up blinkLED.sh
+#### Try cleaning up blinkLED.sh
 I didn't notice any difference when it came to consistency, I even tried removing sleep, which just made it a solid block of signals. 
 
 
