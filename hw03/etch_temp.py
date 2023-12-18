@@ -12,10 +12,14 @@ import smbus
 import gpiod
 import time
 
+bus = smbus.SMBus(2)
+leftTMP = 0x49
+rightTMP = 0x4A
 
 offset = 5
-GREEN = 2
+GREEN = 0
 RED = 1
+debounce = 0
 
 class Board:
     def __init__(self):
@@ -27,9 +31,31 @@ class Board:
         self.left_old = 0
         self.right_old = 0
         self.color = GREEN
+        self.baseTemp = self.get_temp()
+        self.currTemp = self.get_temp()
+        self.tempDebounce = 0
         self.display_setup()
         self.draw()
         self.dial_setup()
+    
+    def compare_temp(self):
+        self.currTemp = self.get_temp()
+        if(self.currTemp[0] == (self.baseTemp[0]+2) and self.tempDebounce == 0):
+            self.tempDebounce = 1
+            if self.color == GREEN:
+                self.color = RED
+            else:
+                self.color = GREEN
+        if(self.currTemp[1] == (self.baseTemp[1]+2)):
+            self.clear()
+
+        if((self.currTemp[0] <= self.baseTemp[0]+1) and self.tempDebounce == 1):
+            self.tempDebounce = 0
+
+    def get_temp(self):
+        temp1 = bus.read_byte_data(leftTMP, 0)
+        temp2 = bus.read_byte_data(rightTMP, 0)
+        return [temp1,temp2]
 
 
     def display_setup(self):
@@ -86,6 +112,8 @@ class Board:
     def clear(self):
         self.out =  [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        self.baseTemp = self.get_temp()
+        self.draw()
 
     def move(self, dir):
         if dir == 'UP':
@@ -117,7 +145,7 @@ class Board:
     #     self.out[1+(2*self.cursor[0])] = self.out[1+(2*self.cursor[1])] ^ (1 << self.cursor[1])
     
     def write_cursor(self):
-        self.out[(self.color*self.cursor[0])] |= 1 << self.cursor[1]
+        self.out[(2*self.cursor[0])+self.color] |= 1 << self.cursor[1]
 
     def draw(self):
         self.bus.write_i2c_block_data(self.address,0,self.out)
@@ -133,10 +161,16 @@ def read_data(file_name):
 def main():
     board = Board()
 
-    while(True):
-        board.get_data()
-        board.draw()
-        print(board.out,end="\r")
-        time.sleep(0.02)
+    try:
+        while(True):
+            board.get_data()
+            board.draw()
+            board.compare_temp()
+            print(board.out,end="\r")
+            time.sleep(0.05)
+    except KeyboardInterrupt:
+        print("\n Byebye \n")
+        board.clear()
+        return 1
 
 main()
