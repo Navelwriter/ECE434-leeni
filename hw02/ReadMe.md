@@ -40,3 +40,17 @@ Please note that button presses are not properly debounced so the cursor may mov
 | Button1 + Button2    | TOGGLE BETWEEN DRAW AND ERASE     |
 | Button2 + Button3    | QUIT APPLICATION    |
 
+
+# hw02 grading
+
+| Points      | Description | Comment
+| ----------- | ----------- | -------
+|  2/2 | Buttons and LEDs 
+|  8/8 | Etch-a-Sketch works
+|  2/2 | Measuring a gpio pin on an Oscilloscope 
+|  2/2 | Questions answered
+|  4/4 | Table complete 
+|  2/2 | gpiod
+| 20/20   | **Total**
+
+Nice use of conbination keys.
