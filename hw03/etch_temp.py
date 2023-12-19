@@ -39,24 +39,22 @@ class Board:
         self.dial_setup()
     
     def compare_temp(self):
-        self.currTemp = self.get_temp()
-        if(self.currTemp[0] == (self.baseTemp[0]+2) and self.tempDebounce == 0):
-            self.tempDebounce = 1
+        self.currTemp = self.get_temp() 
+        if(self.currTemp[0] == (self.baseTemp[0]+2) and self.tempDebounce == 0): #compare the current temp to the baseline, temp increases by 2 when touched
+            self.tempDebounce = 1 #This is part of debouncing
             if self.color == GREEN:
                 self.color = RED
             else:
                 self.color = GREEN
         if(self.currTemp[1] == (self.baseTemp[1]+2)):
             self.clear()
-
-        if((self.currTemp[0] <= self.baseTemp[0]+1) and self.tempDebounce == 1):
+        if((self.currTemp[0] <= self.baseTemp[0]+1) and self.tempDebounce == 1): #Checks if it is currently being pressed, resets if temp dips down
             self.tempDebounce = 0
 
     def get_temp(self):
         temp1 = bus.read_byte_data(leftTMP, 0)
         temp2 = bus.read_byte_data(rightTMP, 0)
         return [temp1,temp2]
-
 
     def display_setup(self):
         self.bus = smbus.SMBus(2) 
@@ -95,7 +93,6 @@ class Board:
     def get_data(self):
         left = read_data(self.left_data)
         right = read_data(self.right_data)
-        #print(f'left {left} from {self.left_pos} right {right} from {self.right_pos} ',end="\n")
         if left > self.left_old + offset:
             self.left_old = left
             self.move('DOWN') 
@@ -112,55 +109,40 @@ class Board:
     def clear(self):
         self.out =  [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
-        self.baseTemp = self.get_temp()
-        self.draw()
+        self.baseTemp = self.get_temp() #reset baseline temp
+        self.draw() #clear screen
 
     def move(self, dir):
         if dir == 'UP':
-            if(self.cursor[1] % 8 != 7): 
+            if(self.cursor[1] % 8 != 7): #just checks if it is at upper limit
                 self.cursor[1]+=1
-                # self.update_cursor()
                 self.write_cursor()
-                #print('UP',end="\n")
         elif dir == 'DOWN':
-            if(self.cursor[1] % 8 != 0): 
+            if(self.cursor[1] % 8 != 0):  #checks if it is at bottom limit
                 self.cursor[1]-=1
-                # self.update_cursor()
                 self.write_cursor()
-                #print('DOWN',end="\n")
         elif dir == 'LEFT':
             if(self.cursor[0] % 8 != 0): 
                 self.cursor[0]-=1
-                # self.update_cursor()
                 self.write_cursor()
-                #print('LEFT',end="\n")
         elif dir == 'RIGHT':
             if(self.cursor[0] % 8 != 7): 
                 self.cursor[0]+=1
-                # self.update_cursor()
                 self.write_cursor()
-                #print('RIGHT',end="\n")
-
-    # def update_cursor(self):
-    #     self.out[1+(2*self.cursor[0])] = self.out[1+(2*self.cursor[1])] ^ (1 << self.cursor[1])
     
     def write_cursor(self):
-        self.out[(2*self.cursor[0])+self.color] |= 1 << self.cursor[1]
+        self.out[(2*self.cursor[0])+self.color] |= 1 << self.cursor[1] #logic for setting color
 
     def draw(self):
         self.bus.write_i2c_block_data(self.address,0,self.out)
-
 
 def read_data(file_name):
     file_name.seek(0)
     data = file_name.read()[:-1]
     return int(data)
 
-        
-        
 def main():
     board = Board()
-
     try:
         while(True):
             board.get_data()
@@ -172,5 +154,4 @@ def main():
         print("\n Byebye \n")
         board.clear()
         return 1
-
 main()
