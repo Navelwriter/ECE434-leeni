@@ -36,3 +36,16 @@ Increase the temperature of the left TMP101 to toggle the color between RED and 
 Increase the temperature of the right TMP101 to clear the screen\
 \
 ctrl+c on host keyboard to quit the program
+
+# hw03 grading
+
+| Points      | Description | |
+| ----------- | ----------- |-|
+|  4/8 | TMP101 | Didn't use /sys/class/i2c-adapter/i2c-2/new_device 
+|  2/2 |   | Documentation 
+|  6/5 | Etch-a-Sketch | Nice use of TMP101 to clear screen
+|  3/3 |   | setup.sh
+|  2/2 |   | Documentation
+| 17/20 | **Total**
+
+*My comments are in italics. --may*
