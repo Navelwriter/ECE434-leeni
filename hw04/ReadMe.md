@@ -12,6 +12,6 @@ The LCD is connected through SPI1
 ### Boris Photo
 ### mplayer Playback
 To play gif format looping 5 times \
-run ` mplayer -loop 5 -vo fbdev2:/dev/fb0 -vf scale=320:240 -framedrop nijika-ijichi-bocchi-the-rock.gif `
+run ` mplayer -loop 5 -vo fbdev2:/dev/fb0 -vf scale=320:240 -framedrop girl.gif `
 
 ###
