@@ -14,4 +14,7 @@ The LCD is connected through SPI1
 To play gif format looping 5 times \
 run ` mplayer -loop 5 -vo fbdev2:/dev/fb0 -vf scale=320:240 -framedrop girl.gif `
 
+To play gif rotated 90 degrees (without looping)
+run ' mplayer -vo fbdev2:/dev/fb0 -vf rotate=1 -vf-add scale=320:240 -framedrop girl.gif `
+
 ###
