@@ -24,7 +24,7 @@ offset = 5
 GREEN = 0
 RED = 1
 debounce = 0
-
+board = None
 class Board:
     def __init__(self):
         self.x = 7
@@ -40,7 +40,6 @@ class Board:
         self.tempDebounce = 0
         self.display_setup()
         self.draw()
-        self.dial_setup()
     
     def compare_temp(self):
         self.currTemp = self.get_temp() 
@@ -95,15 +94,14 @@ class Board:
             if(self.cursor[0] % 8 != 7): 
                 self.cursor[0]+=1
                 self.write_cursor()
+        self.draw()
+
     
     def write_cursor(self):
         self.out[(2*self.cursor[0])+self.color] |= 1 << self.cursor[1] #logic for setting color
 
     def draw(self):
         self.bus.write_i2c_block_data(self.address,0,self.out)
-
-board = Board()
-board.draw()
 
 @app.route("/")
 def index():
@@ -114,6 +112,10 @@ def index():
 
 @app.route("/<task>")
 def task(task):
+    templateData = {
+        'title' : 'Etch-a-sketch'
+        }
+
     if task == "clear":
         board.clear()
     elif task == "up":
@@ -128,6 +130,7 @@ def task(task):
     return render_template('EtchIndex.html', **templateData)
 
 if __name__ == "__main__":
+    board = Board()
     app.run(host='0.0.0.0', port=8081, debug=True)
 
 
