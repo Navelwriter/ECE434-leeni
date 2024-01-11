@@ -54,6 +54,13 @@ class Board:
         if((self.currTemp[0] <= self.baseTemp[0]+1) and self.tempDebounce == 1): #Checks if it is currently being pressed, resets if temp dips down
             self.tempDebounce = 0
 
+    def toggle_color(self):
+        #toggle color
+        if self.color == GREEN:
+            self.color = RED
+        else:
+            self.color = GREEN
+
     def get_temp(self):
         temp1 = bus.read_byte_data(leftTMP, 0)
         temp2 = bus.read_byte_data(rightTMP, 0)
@@ -106,14 +113,16 @@ class Board:
 @app.route("/")
 def index():
     templateData = {
-        'title' : 'Etch-a-sketch'
+        'title' : 'Etch-a-sketch',
+        'color' : board.color
         }
     return render_template('EtchIndex.html', **templateData)
 
 @app.route("/<task>")
 def task(task):
     templateData = {
-        'title' : 'Etch-a-sketch'
+        'title' : 'Etch-a-sketch',
+        'color' : board.color
         }
 
     if task == "clear":
@@ -126,6 +135,8 @@ def task(task):
         board.move('LEFT')
     elif task == "right":
         board.move('RIGHT')
+    elif task == "toggle color":
+        board.toggle_color()
     board.draw()
     return render_template('EtchIndex.html', **templateData)
 
