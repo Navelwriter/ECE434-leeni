@@ -27,6 +27,8 @@ This program simply toggles on and off the USR2 and USR3 built-in LEDS using but
 You may need to disable USR2 and USR3 from its status led utilities to get this to work properly.
 
 ## Kernel Driver
+This is run using ` ./kernelTMP101.sh ` \
+This outputs the temperatures of the two I2C devices using the kernel hardware monitor (hwmon)
 ## Flask + Etch-a-Sketch
 This maintains the use of the tmp101 sensors for clear and toggling color, but even these functionalities are also done using the web interface. \
 
