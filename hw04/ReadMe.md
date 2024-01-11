@@ -1,10 +1,22 @@
 # Homework 4
 ## Memory Map
+| Memory Address| Description| Size|
+| ----------- | ----------| --|
+| 0xFFFF_FFFF     |      | |
+| 0xBFFF_FFFF -> 0x8000_0000     | EMIF0_SDRAM     | 1GB|
+| 0x481A_FFFF -> 0x481A_E000    |   GPIO3        | 8KB Total|
+| 0x481A_DFFF -> 0x481A_C000    |   GPIO2        | 8KB Total|
+| 0x481A_E000 -> 0x4804_C000    |   GPIO1        | 8KB Total|
+| 0x44E0_8FFF -> 0x44E0_7000    |   GPIO0        | 8KB Total|
+| 0x1FFF_FFFF -> 0x0000_0000 |  GPMC External Memory         |512MB|
+
 ## mmap setup
 | Purpose      | GPIO PIN | GPIO1 OFFSET|
 | ----------- | ----------| --- |
 | Button0     | P9_11     | 1<<30 |
 | Button1     | P9_13     | 1<<31 |
+
+Both mmap files (buttonToggle.py and toggleGPIO.py) require a chmod +x as well as sudo permission to run
 ## mmap gpio toggle
 I tried toggling the gpio without any sleep functions on oscilliscope to see what would happen \
 I got the result of 140.9kHZ frequency. Compared to the maximum speed of 2.724kHZ for the .c gpiod toggling, mmap is much much faster.
@@ -30,12 +42,13 @@ Credits go to Google Bard for making this look pretty after I got the basic func
 The LCD is connected through SPI1
 ### Boris Photo
 To display the regular boris.png \
-![image info](./media/normalDog.jpg)
-run ` sudo fbi -noverbose -T 1 -a boris.png `
+run ` sudo fbi -noverbose -T 1 -a boris.png ` \
+<img src="./media/normalDog.jpg" width="500"> \
 To rotate the image, I chose to modify the image instead of interfacing with fbi directly \
-![image info](./media/smartDog.jpg)
 This was done using ` convert boris.png -rotate 90 borisRotate.png ` \
-and displays with ` sudo fbi -noverbose -T 1 -a borisRotate.png ` \ 
+and displays with ` sudo fbi -noverbose -T 1 -a borisRotate.png ` \
+<img src="./media/smartDog.jpg" width="500">
+
 ### mplayer Playback
 To play gif format looping 5 times \
 
@@ -54,7 +67,7 @@ https://github.com/Navelwriter/ECE434-leeni/assets/77686570/8bfd5f7d-5d36-42a2-8
 run ' mplayer -vo fbdev2:/dev/fb0 -vf rotate=1 -vf-add scale=320:240 -framedrop girl.gif `
 ### Generate Text
 Simply run ` ./text.sh `
-![image info](./media/textDog.jpg)
+<img src="./media/textDog.jpg" width="500">
 
 
 ###
