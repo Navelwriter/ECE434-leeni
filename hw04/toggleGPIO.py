@@ -1,5 +1,4 @@
-#
-:/usr/bin/python3
+#!/usr/bin/python3
 from mmap import mmap
 import time, struct
 
@@ -30,6 +29,8 @@ try:
   while(True):
       #Toggle gpioToggle without delay
       mem1[GPIO_CLEARDATAOUT:GPIO_CLEARDATAOUT+4] = struct.pack("<L", gpioToggle)
+      #time.sleep(0.5)
+
       mem1[GPIO_SETDATAOUT:GPIO_SETDATAOUT+4] = struct.pack("<L",gpioToggle)
 
 except KeyboardInterrupt:
