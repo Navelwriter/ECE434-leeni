@@ -1,0 +1,1 @@
+cmd_/home/debian/ECE434-leeni/hw05/gpio_test/gpio_test.ko := ld -r -EL -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T scripts/module.lds -o /home/debian/ECE434-leeni/hw05/gpio_test/gpio_test.ko /home/debian/ECE434-leeni/hw05/gpio_test/gpio_test.o /home/debian/ECE434-leeni/hw05/gpio_test/gpio_test.mod.o;  true
