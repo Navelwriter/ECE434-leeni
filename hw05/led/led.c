@@ -127,14 +127,15 @@ static struct attribute_group attr_group = {
 
 static struct kobject *ebb_kobj;            /// The pointer to the kobject
 static struct task_struct *task1;            /// The pointer to the thread task
+static struct task_struct *task2;
 
-/** @brief The LED Flasher main kthread loop
+/** @brief The LED1 Flasher main kthread loop
  *
  *  @param arg A void pointer used in order to pass data to the thread
  *  @return returns 0 if successful
  */
 static int flash1(void *arg){
-   printk(KERN_INFO "EBB LED: Thread has started running \n");
+   printk(KERN_INFO "EBB LED1: Thread has started running \n");
    while(!kthread_should_stop()){           // Returns true when kthread_stop() is called
       set_current_state(TASK_RUNNING);
       if (mode==FLASH) ledOn1 = !ledOn1;      // Invert the LED state
@@ -144,7 +145,27 @@ static int flash1(void *arg){
       set_current_state(TASK_INTERRUPTIBLE);
       msleep(blinkPeriod1/2);                // millisecond sleep for half of the period
    }
-   printk(KERN_INFO "EBB LED: Thread has run to completion \n");
+   printk(KERN_INFO "EBB LED1: Thread has run to completion \n");
+   return 0;
+}
+
+/** @brief The LED2 Flasher main kthread loop
+ *
+ *  @param arg A void pointer used in order to pass data to the thread
+ *  @return returns 0 if successful
+ */
+static int flash2(void *arg){
+   printk(KERN_INFO "EBB LED2: Thread has started running \n");
+   while(!kthread_should_stop()){           // Returns true when kthread_stop() is called
+      set_current_state(TASK_RUNNING);
+      if (mode==FLASH) ledOn2 = !ledOn2;      // Invert the LED state
+      else if (mode==ON) ledOn2 = true;
+      else ledOn2 = false;
+      gpio_set_value(gpioLED2, ledOn2);       // Use the LED state to light/turn off the LED
+      set_current_state(TASK_INTERRUPTIBLE);
+      msleep(blinkPeriod2/2);                // millisecond sleep for half of the period
+   }
+   printk(KERN_INFO "EBB LED2: Thread has run to completion \n");
    return 0;
 }
 
@@ -178,11 +199,20 @@ static int __init ebbLED_init(void){
    gpio_direction_output(gpioLED1, ledOn1);   // Set the gpio to be in output mode and turn on
    gpio_export(gpioLED1, false);  // causes gpio49 to appear in /sys/class/gpio
                                  // the second argument prevents the direction from being changed
+   ledOn2 = true;
+   gpio_request(gpioLED2, "sysfs");
+   gpio_direction_output(gpioLED2, ledOn2);
+   gpio_export(gpioLED2, false);
 
    task1 = kthread_run(flash1, NULL, "LED_flash_thread");  // Start the LED flashing thread
+   task2 = kthread_run(flash2, NULL, "LED_flash_thread");
    if(IS_ERR(task1)){                                     // Kthread name is LED_flash_thread
-      printk(KERN_ALERT "EBB LED: failed to create the task\n");
+      printk(KERN_ALERT "EBB LED1: failed to create the task\n");
       return PTR_ERR(task1);
+   }
+   if(IS_ERR(task2)){
+      printk(KERN_ALERT "EBB LED2: failed to create the task\n");
+      return PTR_ERR(task2);
    }
    return result;
 }
@@ -192,11 +222,19 @@ static int __init ebbLED_init(void){
  *  code is used for a built-in driver (not a LKM) that this function is not required.
  */
 static void __exit ebbLED_exit(void){
-   kthread_stop(task);                      // Stop the LED flashing thread
+
    kobject_put(ebb_kobj);                   // clean up -- remove the kobject sysfs entry
+                                            
+   kthread_stop(task1);                      // Stop the LED flashing thread
    gpio_set_value(gpioLED1, 0);              // Turn the LED off, indicates device was unloaded
    gpio_unexport(gpioLED1);                  // Unexport the Button GPIO
    gpio_free(gpioLED1);                      // Free the LED GPIO
+
+   kthread_stop(task2);                 
+   gpio_set_value(gpioLED2, 0);      
+   gpio_unexport(gpioLED2);         
+   gpio_free(gpioLED2);
+                                             
    printk(KERN_INFO "EBB LED: Goodbye from the EBB LED LKM!\n");
 }
 

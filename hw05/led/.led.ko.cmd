@@ -1,0 +1,1 @@
+cmd_/home/debian/ECE434-leeni/hw05/led/led.ko := ld -r -EL -z noexecstack --no-warn-rwx-segments --build-id=sha1  -T scripts/module.lds -o /home/debian/ECE434-leeni/hw05/led/led.ko /home/debian/ECE434-leeni/hw05/led/led.o /home/debian/ECE434-leeni/hw05/led/led.mod.o;  true
