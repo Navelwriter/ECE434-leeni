@@ -1,9 +1,14 @@
 # Homework 5
 
 ## Make
+In /make, running `gcc -g -c app.c -o app.o` tells me the following: \
+1. Target = app.o
+2. Dependency = app.c
+3. Command = gcc
+The `-c` tells the compiler to not run the linker
+## Kernel Source
 Running uname -a provides me this kernel version. Went from 5.10.168-ti-r75 to 5.10.168-ti-r74 \
 ![image](https://github.com/Navelwriter/ECE434-leeni/assets/77686570/95e045ef-0329-43b4-8e8f-c851e36e0c22)
-## Kernel Source
 ## Kernel Modules 
 ### gpio_test
 Found under the folder gpio_test, this one file completes both requirements of the assignment.
