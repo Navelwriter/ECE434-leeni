@@ -16,7 +16,7 @@ bus = smbus.SMBus(2)
 leftTMP = 0x49
 rightTMP = 0x4A
 
-offset = 5
+offset = 25
 GREEN = 0
 RED = 1
 debounce = 0
@@ -70,15 +70,15 @@ class Board:
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
 
     def get_data(self):
-        left = read_data(self.x_file)
-        right = read_data(self.y_file)
-        if left > offset:
+        horizontal = read_data(self.x_file)
+        vertical = read_data(self.y_file)
+        if vertical > offset:
             self.move('DOWN') 
-        elif left < 0 - offset:
+        elif vertical < 0 - offset:
             self.move('UP')      
-        if right > offset:
+        if horizontal > offset:
             self.move('RIGHT')
-        elif right < 0 - offset:
+        elif horizontal < 0 - offset:
             self.move('LEFT')
 
     def clear(self):
@@ -114,6 +114,7 @@ class Board:
     def exiting(self):
         self.x_file.close()
         self.y_file.close()
+        
 def read_data(file_name):
     file_name.seek(0)
     data = file_name.read()[:-1]
@@ -126,7 +127,7 @@ def main():
             board.get_data()
             board.draw()
             board.compare_temp()
-            time.sleep(0.5)
+            time.sleep(0.75)
     except KeyboardInterrupt:
         print("\n Byebye \n")
         board.clear()
