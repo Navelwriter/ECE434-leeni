@@ -1,5 +1,6 @@
 # Homework 5
-
+## Project
+I have added my possible project ideas onto the shared document
 ## Make
 In /make, running `gcc -g -c app.c -o app.o` tells me the following: \
 1. Target = app.o
