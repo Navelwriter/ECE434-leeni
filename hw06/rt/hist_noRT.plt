@@ -2,7 +2,7 @@
 
 set terminal png medium size 800,600
 # set terminal X11 persist
-set output "cyclictest_noload.png"
+set output "cyclictestnoRT.png"
 set datafile commentschars "#"
 
 set logscale y
@@ -15,5 +15,5 @@ set yrang [0.85:*]
 set xlabel "t (us)"
 set ylabel "Count"
 
-plot "nortload.hist" using 1:2 with histeps title "NON-RT",    \
-     "rtload.hist" using 1:2 with histeps title "PREEMPT-RT"
+plot "nort.hist" using 1:2 with histeps title "NON-RT w/ load",    \
+     "nortload.hist" using 1:2 with histeps title "NON-RT w/o load"

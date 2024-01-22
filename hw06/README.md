@@ -25,11 +25,11 @@ The current running process is a low-priority interrupt, because it is running o
 By using force_irq threads. This means that only a very small portion of code is run on the hardirq layer just enough to wake up the thread desired. Now that it is a thread running in the scheduler, these threads are able to be pre-empted, meaning that if there is a higher-priority thread needing to be run, it can be pre-empted to be run immediately without waiting for the low-priority thread to finish.
 ## PREEMT_RT
 The modified script to plot these histograms, as well as the histograms itself can be found in /rt \
-### Histogram w/ Load
 The load was compiling the make-file found in cd ~/exercises/linux/modules twice \
-![With load](cyclictest.png)
-### Histogram w/o Load
-![Without load](cyclictest_noload.png)
+### Histogram w/ PREEMPT-RT
+![With load](cyclictestRT.png)
+### Histogram w/o NON-RT (without RT kernel)
+![Without load](cyclictestnoRT.png)
 ### Analysis
-Based on the plots, I can conclude the following. \
-The closest point for a bounded latency for the RT-Kernel module would be at around 170 us with load. 
+Based on the plots, I can conclude the following: \
+The closest point for a bounded latency for the RT-Kernel module would be at around 150 us with load. Would be preferable to have more data or test cases to make sure of this...
