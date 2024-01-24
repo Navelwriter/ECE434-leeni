@@ -33,3 +33,20 @@ The load was compiling the make-file found in cd ~/exercises/linux/modules twice
 ### Analysis
 Based on the plots, I can conclude the following: \
 The closest point for a bounded latency for the RT-Kernel module would be at around 150 us with load. Would be preferable to have more data or test cases to make sure of this...
+
+
+# hw06 grading
+
+| Points      | Description | |
+| ----------- | ----------- |-|
+|  2/2 | Project 
+|  5/5 | Questions
+|  4/4 | PREEMPT_RT
+|  2/2 | Plots to 500 us
+|  4/5 | Plots - Heavy/Light load |*Should plot w/o loads data on same plot, and w load data on another so you can easily compair RT and non-RT*
+|  2/2 | Extras
+| 19/20 | **Total**
+
+*My comments are in italics. --may*
+
+ | *Mainline is the main kernel tree.*
