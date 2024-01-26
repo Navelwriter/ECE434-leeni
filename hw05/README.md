@@ -34,3 +34,18 @@ Located in the /led folder, this ports the kernel_module LED example to have two
 Compile using 'make' \
 Add the kernel module to the kernel using `sudo insmod led.ko` \
 After use, remove the module by `sudo rmmod led`
+
+# hw05 grading
+
+| Points      | Description |
+| ----------- | ----------- |
+|  0/0 | Project 
+|  0/2 | Makefile | *missing*
+|  6/6 | Kernel Source
+|  6/6 | Kernel Modules: hello, ebbchar, gpio_test, led
+|  4/4 | Etch-a-Sketch
+|  2/2 | Blink at different rates
+| 18/20 | **Total**
+
+*My comments are in italics. --may*
+
