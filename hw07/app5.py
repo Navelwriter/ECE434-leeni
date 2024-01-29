@@ -10,16 +10,19 @@ MAX0 = os.path.join(path, "hwmon0/device/temperature")
 MAX1 = os.path.join(path, "hwmon1/device/temperature")
 MAX2 = os.path.join(path, "hwmon2/device/temperature")
 
-Files = [open(MAX0,"r"),open(MAX1,"r"),open(MAX2,"r")]
+Files = [MAX0,MAX1,MAX2]
 
 temp = [0,0,0]
 
 def readValues():
     temps = []
-    for file in Files:
+    for filePath in Files:
+        file = open(filePath,"r")
         file.seek(0)
-        data = file_name.read()[:-1]
-        temps.append(int(data))
+        data = file.read()[:-1]        
+        file.close()
+        temps.append(int(data)/1000)
+
     temp = temps
     return temps
 
@@ -35,7 +38,7 @@ def index():
         'temp2'  : vals[1],
         'temp3'  : vals[2]
     }
-    return render_template('index5.html', **templateData)
+    return render_template('index.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
@@ -47,6 +50,6 @@ def action(deviceName, action):
         'temp2'  : tempVal[1],
         'temp3'  : tempVal[2]
     }
-    return render_template('index5.html', **templateData)
+    return render_template('index.html', **templateData)
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=8081, debug=True)

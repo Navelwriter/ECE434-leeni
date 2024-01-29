@@ -6,15 +6,11 @@
   <body> 
 		<h1>GPIO Control</h1> 
 		<h2> Sensor Status </h2> 
-		<h3> BUTTON ==>  {{ button  }}</h3> 
-		<h2> Actuator Status & Control </h2> 
-		<h3> RED LED ==>  {{ ledRed  }}  ==>   
-			{% if  ledRed   == 1 %} 
-				<a href="/ledRed/off"class="button">TURN OFF</a> 
-			{% else %} 
-				<a href="/ledRed/on" class="button">TURN ON</a>  
-			{% endif %}	 
-		</h3> 
-		</h3> 
+        Sensor1 ==> {{ temp1 }} C<br>
+        Sensor2 ==> {{ temp2 }} C<br>
+        Sensor3 ==> {{ temp3 }} C<br>
+            <br> 
+            <h3> Command </h3>  
+			<a href="/temp/read" class="button">REFRESH</a>  
   </body> 
 </html>
