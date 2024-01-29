@@ -2,8 +2,8 @@
 Description=flask server
 
 [Service]
-WorkingDirectory=/home/debian/exercises/flask/server
-ExecStart=/home/debian/exercises/flask/server/app5.py
+WorkingDirectory=/home/debian/ECE434-leeni/hw07
+ExecStart=/home/debian/ECE434-leeni/hw07/app5.py
 SyslogIdentifier=flask
 
 [Install]
