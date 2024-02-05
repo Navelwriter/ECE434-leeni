@@ -15,3 +15,17 @@ You should see three temperatures and a button, press the button to refresh the 
 ![image](https://github.com/Navelwriter/ECE434-leeni/assets/77686570/364859e2-99b5-44c1-887d-97e36dc99fe5)
 
 End the service with `sudo systemctl stop flask`
+
+# hw07 grading
+
+| Points      | Description | | |
+| ----------- | ----------- |-|-|
+|  0/2  | Project Template | | *eLinux project info missing*
+|  0/2  | | Names | 
+|  0/2  | | Executive Summary | 
+| 10/10 | Dallas 1-wire
+|  4/4  | systemd auto start |
+|  0    | Blynk - Etch-a-sketch - extra
+| 14/20 | **Total**
+
+*My comments are in italics. --may*
