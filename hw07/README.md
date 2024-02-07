@@ -17,15 +17,16 @@ You should see three temperatures and a button, press the button to refresh the 
 End the service with `sudo systemctl stop flask`
 
 # hw07 grading
+# hw07 grading
 
 | Points      | Description | | |
 | ----------- | ----------- |-|-|
-|  0/2  | Project Template | | *eLinux project info missing*
-|  0/2  | | Names | 
-|  0/2  | | Executive Summary | 
+|  2/2  | Project Template | | 
+|  2/2  | | Names | 
+|  2/2  | | Executive Summary | 
 | 10/10 | Dallas 1-wire
 |  4/4  | systemd auto start |
 |  0    | Blynk - Etch-a-sketch - extra
-| 14/20 | **Total**
+| 20/20 | **Total**
 
 *My comments are in italics. --may*
