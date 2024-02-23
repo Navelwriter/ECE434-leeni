@@ -5,3 +5,14 @@ Once the credentials.json and token.json were handled, I modified the demo.py fr
 The link is here: https://docs.google.com/spreadsheets/d/1dCWOvBYFwxiwQEi2ZQL4SA12hwQv7k94ZnyaWvGxIr8/edit?usp=sharing \
 The image below shows it resting at ambient until I put my finger on two of the sensors.
 ![image](https://github.com/Navelwriter/ECE434-leeni/assets/77686570/f2fbe16a-eb1e-4981-bfb0-d68fb9c249da)
+
+# hw08 grading
+
+| Points      | Description |
+| ----------- | ----------- |
+| 10/10       | Logging to Sheets
+|  2/2        | URL for sheet
+|  8/8        | Demo
+| 20/20 | **Total**
+
+*My comments are in italics. --may*
